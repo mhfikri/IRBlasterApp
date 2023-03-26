@@ -1,18 +1,18 @@
 package com.example.irblaster;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String tag = "main";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
@@ -30,23 +30,29 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     onSignInResult(result);
                 }
-            });
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MaterialButton buttonLogin = findViewById(R.id.button_login);
+        buttonLogin.setOnClickListener(v -> {
+            createSignInIntent();
+        });
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Log.d(tag, "DisplayName: " + user.getDisplayName());
-            Log.d(tag, "Email: " + user.getEmail());
-            Toast.makeText(this, "Welcome " + user.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
-        } else {
-            createSignInIntent();
+            Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
+            intent.putExtra("user_name", user.getDisplayName());
+            intent.putExtra("user_email", user.getEmail());
+            startActivity(intent);
         }
     }
 
-    public void createSignInIntent() {
+    private void createSignInIntent() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
@@ -62,10 +68,13 @@ public class MainActivity extends AppCompatActivity {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Toast.makeText(this, "Welcome " + user.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
+            intent.putExtra("user_name", user.getDisplayName());
+            intent.putExtra("user_email", user.getEmail());
+            startActivity(intent);
         } else {
             if (response != null) {
-                Log.e(tag, "ERROR: " + response.getError().getErrorCode());
+                Log.e(TAG, "ERROR: " + response.getError().getErrorCode());
             }
         }
     }

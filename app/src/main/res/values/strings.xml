@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">IR Blaster</string>
 
+    <string name="welcome_title">Welcome to Universal Remote Control!</string>
+    <string name="login_button">Login</string>
+
     <string name="menu_item_about">About App</string>
     <string name="about_app_version">App Version: %s</string>
 
