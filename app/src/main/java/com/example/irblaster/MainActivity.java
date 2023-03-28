@@ -45,11 +45,19 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
-            intent.putExtra("user_name", user.getDisplayName());
-            intent.putExtra("user_email", user.getEmail());
+            Intent intent = getIRBlasterIntent(user);
             startActivity(intent);
+            finish();
         }
+    }
+
+    private Intent getIRBlasterIntent(FirebaseUser user) {
+        Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
+        intent.putExtra("user_name", user.getDisplayName());
+        intent.putExtra("user_email", user.getEmail());
+        intent.putExtra("user_phone", user.getPhoneNumber());
+
+        return intent;
     }
 
     private void createSignInIntent() {
@@ -70,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
-            intent.putExtra("user_name", user.getDisplayName());
-            intent.putExtra("user_email", user.getEmail());
-            intent.putExtra("user_phone", user.getPhoneNumber());
-            startActivity(intent);
+            if (user != null) {
+                Intent intent = getIRBlasterIntent(user);
+                startActivity(intent);
+                finish();
+            }
         } else {
             if (response != null) {
                 Log.e(TAG, "ERROR: " + response.getError().getErrorCode());
