@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         MaterialButton buttonLogin = findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(v -> {
             createSignInIntent();
