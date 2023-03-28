@@ -25,9 +25,17 @@ public class IRBlasterActivity extends AppCompatActivity {
 
         String userName = getIntent().getStringExtra("user_name");
         String userEmail = getIntent().getStringExtra("user_email");
-        Log.d(TAG, "DisplayName: " + userName);
-        Log.d(TAG, "Email: " + userEmail);
-        Toast.makeText(this, "Welcome " + userName + "!", Toast.LENGTH_SHORT).show();
+        String userPhone = getIntent().getStringExtra("user_phone");
+        Log.d(TAG, "userName: " + userName);
+        Log.d(TAG, "userEmail: " + userEmail);
+        Log.d(TAG, "userPhone: " + userPhone);
+        if (userName != null) {
+            Toast.makeText(this, "Welcome " + userName + "!", Toast.LENGTH_SHORT).show();
+        } else if (userPhone != null) {
+            Toast.makeText(this, "Welcome " + userPhone + "!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

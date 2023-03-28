@@ -54,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createSignInIntent() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build());
+                new AuthUI.IdpConfig.PhoneBuilder().build());
 
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setIsSmartLockEnabled(false, true)
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
             intent.putExtra("user_name", user.getDisplayName());
             intent.putExtra("user_email", user.getEmail());
+            intent.putExtra("user_phone", user.getPhoneNumber());
             startActivity(intent);
         } else {
             if (response != null) {
