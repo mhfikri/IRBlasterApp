@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false, true)
                 .setAvailableProviders(providers)
+                .setTheme(R.style.Theme_IRBlaster)
                 .build();
         signInLauncher.launch(signInIntent);
     }
