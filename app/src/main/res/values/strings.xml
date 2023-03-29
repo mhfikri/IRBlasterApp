@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">IR Blaster</string>
 
-    <string name="welcome_title">Welcome to Universal Remote Control!</string>
-    <string name="login_button">Login</string>
+    <string name="main_message">Welcome to Universal Remote Control!</string>
+    <string name="main_login">Login</string>
 
     <string name="menu_item_about">About App</string>
     <string name="about_app_version">App Version: %s</string>
@@ -28,4 +28,7 @@
     <string name="esptouch1_configure_result_failed_port">Create EspTouch task failed, the EspTouch port could be used by other thread</string>
     <string name="esptouch1_configure_result_success">EspTouch success</string>
     <string name="esptouch1_configure_result_success_item">BSSID = %1$s, InetAddress = %2$s</string>
+
+    <string name="irblaster_add">Add</string>
+    <string name="irblaster_menu_item_logout">Log out</string>
 </resources>

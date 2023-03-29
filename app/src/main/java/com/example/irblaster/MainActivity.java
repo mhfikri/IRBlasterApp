@@ -30,15 +30,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     onSignInResult(result);
                 }
-            }
-    );
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getSupportActionBar().hide();
 
         MaterialButton buttonLogin = findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(v -> {

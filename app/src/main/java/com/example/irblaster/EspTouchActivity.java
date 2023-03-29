@@ -1,7 +1,9 @@
 package com.example.irblaster;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -293,6 +295,11 @@ public class EspTouchActivity extends EspTouchActivityAbs {
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
             mResultDialog.setCanceledOnTouchOutside(false);
+
+            Intent data = new Intent(activity, IRBlasterActivity.class);
+            data.putExtra("mac_address", firstResult.getBssid());
+            activity.setResult(Activity.RESULT_OK, data);
+            activity.finish();
         }
     }
 }
