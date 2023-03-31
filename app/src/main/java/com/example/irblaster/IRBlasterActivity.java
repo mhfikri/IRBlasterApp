@@ -27,6 +27,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -78,8 +79,14 @@ public class IRBlasterActivity extends AppCompatActivity {
 
         mBinding.irBlasterList.setLayoutManager(new LinearLayoutManager(this));
         mBinding.irBlasterList.addItemDecoration(new DividerItemDecoration(this, OrientationHelper.VERTICAL));
-        final RecyclerView.Adapter adapter = newAdapter();
-        mBinding.irBlasterList.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isSignedIn()) {
+            attachRecyclerViewAdapter();
+        }
     }
 
     @Override
@@ -90,6 +97,11 @@ public class IRBlasterActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    private void attachRecyclerViewAdapter() {
+        final RecyclerView.Adapter adapter = newAdapter();
+        mBinding.irBlasterList.setAdapter(adapter);
     }
 
     private void onAddClick() {
@@ -112,6 +124,10 @@ public class IRBlasterActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean isSignedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
 
     public void signOut() {
