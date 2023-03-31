@@ -85,7 +85,8 @@
                 android:id="@+id/deviceCountEdit"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
@@ -121,7 +122,7 @@
             app:layout_goneMarginStart="4dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/confirmButton"
+            android:id="@+id/confirmBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/esptouch1_confirm"
@@ -153,7 +154,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

@@ -10,23 +10,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.espressif.iot.esptouch.EsptouchTask;
 import com.espressif.iot.esptouch.IEsptouchResult;
 import com.espressif.iot.esptouch.IEsptouchTask;
 import com.espressif.iot.esptouch.util.ByteUtil;
 import com.espressif.iot.esptouch.util.TouchNetUtil;
-import com.google.android.material.button.MaterialButton;
+import com.example.irblaster.databinding.ActivityEsptouchBinding;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -35,21 +30,12 @@ import java.util.Locale;
 
 public class EspTouchActivity extends EspTouchActivityAbs {
     private static final String TAG = EspTouchActivity.class.getSimpleName();
+
     private static final int REQUEST_PERMISSION = 0x01;
 
     private EsptouchAsyncTask4 mTask;
 
-    private ConstraintLayout content;
-    private ConstraintLayout progressView;
-    private TextView apSsidText;
-    private TextView apBssidText;
-    private TextView messageView;
-    private TextView testResult;
-    private EditText apPasswordEdit;
-    private EditText deviceCountEdit;
-    private RadioGroup packageModeGroup;
-    private MaterialButton confirmButton;
-    private Button cancelButton;
+    private ActivityEsptouchBinding mBinding;
 
     private String mSsid;
     private byte[] mSsidBytes;
@@ -58,27 +44,11 @@ public class EspTouchActivity extends EspTouchActivityAbs {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_esptouch);
+        mBinding = ActivityEsptouchBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+        mBinding.confirmBtn.setOnClickListener(v -> executeEsptouch());
 
-        content = findViewById(R.id.content);
-        apSsidText = findViewById(R.id.apSsidText);
-        apBssidText = findViewById(R.id.apBssidText);
-        apPasswordEdit = findViewById(R.id.apPasswordEdit);
-        deviceCountEdit = findViewById(R.id.deviceCountEdit);
-        packageModeGroup = findViewById(R.id.packageModeGroup);
-        messageView = findViewById(R.id.messageView);
-        confirmButton = findViewById(R.id.confirmButton);
-        progressView = findViewById(R.id.progressView);
-        testResult = findViewById(R.id.testResult);
-        cancelButton = findViewById(R.id.cancelButton);
-
-        deviceCountEdit.setText("1");
-
-        confirmButton.setOnClickListener(v -> {
-            executeEsptouch();
-        });
-
-        cancelButton.setOnClickListener(v -> {
+        mBinding.cancelButton.setOnClickListener(v -> {
             showProgress(false);
             if (mTask != null) {
                 mTask.cancelEsptouch();
@@ -123,11 +93,11 @@ public class EspTouchActivity extends EspTouchActivityAbs {
 
     private void showProgress(boolean show) {
         if (show) {
-            content.setVisibility(View.INVISIBLE);
-            progressView.setVisibility(View.VISIBLE);
+            mBinding.content.setVisibility(View.INVISIBLE);
+            mBinding.progressView.setVisibility(View.VISIBLE);
         } else {
-            content.setVisibility(View.VISIBLE);
-            progressView.setVisibility(View.GONE);
+            mBinding.content.setVisibility(View.VISIBLE);
+            mBinding.progressView.setVisibility(View.GONE);
         }
     }
 
@@ -159,21 +129,21 @@ public class EspTouchActivity extends EspTouchActivityAbs {
             }
         }
 
-        apSsidText.setText(stateResult.ssid);
-        apBssidText.setText(stateResult.bssid);
-        messageView.setText(message);
-        confirmButton.setEnabled(confirmEnable);
+        mBinding.apSsidText.setText(mSsid);
+        mBinding.apBssidText.setText(mBssid);
+        mBinding.messageView.setText(message);
+        mBinding.confirmBtn.setEnabled(confirmEnable);
     }
 
     private void executeEsptouch() {
         byte[] ssid = mSsidBytes == null ? ByteUtil.getBytesByString(this.mSsid)
                 : mSsidBytes;
-        CharSequence pwdStr = apPasswordEdit.getText();
+        CharSequence pwdStr = mBinding.apPasswordEdit.getText();
         byte[] password = pwdStr == null ? null : ByteUtil.getBytesByString(pwdStr.toString());
         byte[] bssid = TouchNetUtil.parseBssid2bytes(this.mBssid);
-        CharSequence devCountStr = deviceCountEdit.getText();
+        CharSequence devCountStr = mBinding.deviceCountEdit.getText();
         byte[] deviceCount = devCountStr == null ? new byte[0] : devCountStr.toString().getBytes();
-        byte[] broadcast = {(byte) (packageModeGroup.getCheckedRadioButtonId() == R.id.packageBroadcast ? 1 : 0)};
+        byte[] broadcast = {(byte) (mBinding.packageModeGroup.getCheckedRadioButtonId() == R.id.packageBroadcast ? 1 : 0)};
 
         if (mTask != null) {
             mTask.cancelEsptouch();
@@ -210,7 +180,7 @@ public class EspTouchActivity extends EspTouchActivityAbs {
         @Override
         protected void onPreExecute() {
             EspTouchActivity activity = mActivity.get();
-            activity.testResult.setText("");
+            activity.mBinding.testResult.setText("");
             activity.showProgress(true);
         }
 
@@ -223,7 +193,7 @@ public class EspTouchActivity extends EspTouchActivityAbs {
                 String text = result.getBssid() + " is connected to the wifi";
                 Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
 
-                activity.testResult.append(String.format(
+                activity.mBinding.testResult.append(String.format(
                         Locale.ENGLISH,
                         "%s,%s\n",
                         result.getInetAddress().getHostAddress(),
