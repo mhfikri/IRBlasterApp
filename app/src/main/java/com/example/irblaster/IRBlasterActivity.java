@@ -6,25 +6,43 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.irblaster.databinding.ActivityIrblasterBinding;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class IRBlasterActivity extends AppCompatActivity {
-
     private static final String TAG = IRBlasterActivity.class.getSimpleName();
 
     private static final int MENU_ITEM_LOGOUT = 0;
+
+    private static final CollectionReference sDeviceCollection =
+            FirebaseFirestore.getInstance().collection("devices");
+
+    private static final Query sDeviceQuery =
+            sDeviceCollection.orderBy("name", Query.Direction.ASCENDING);
+
+    private ActivityIrblasterBinding mBinding;
 
     private final ActivityResultLauncher<Intent> espTouchLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -40,7 +58,9 @@ public class IRBlasterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_irblaster);
+        mBinding = ActivityIrblasterBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+        mBinding.addButton.setOnClickListener(v -> onAddClick());
 
         String userName = getIntent().getStringExtra("user_name");
         String userEmail = getIntent().getStringExtra("user_email");
@@ -56,10 +76,10 @@ public class IRBlasterActivity extends AppCompatActivity {
             Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
         }
 
-        MaterialButton buttonAdd = findViewById(R.id.button_add);
-        buttonAdd.setOnClickListener(v -> {
-            espTouchLauncher.launch(new Intent(IRBlasterActivity.this, EspTouchActivity.class));
-        });
+        mBinding.irBlasterList.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.irBlasterList.addItemDecoration(new DividerItemDecoration(this, OrientationHelper.VERTICAL));
+        final RecyclerView.Adapter adapter = newAdapter();
+        mBinding.irBlasterList.setAdapter(adapter);
     }
 
     @Override
@@ -70,6 +90,11 @@ public class IRBlasterActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    private void onAddClick() {
+        Intent intent = new Intent(IRBlasterActivity.this, EspTouchActivity.class);
+        espTouchLauncher.launch(intent);
     }
 
     @Override
@@ -98,5 +123,30 @@ public class IRBlasterActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    private RecyclerView.Adapter newAdapter() {
+        FirestoreRecyclerOptions<IRBlaster> options =
+                new FirestoreRecyclerOptions.Builder<IRBlaster>()
+                        .setQuery(sDeviceQuery, IRBlaster.class)
+                        .setLifecycleOwner(this)
+                        .build();
+
+        return new FirestoreRecyclerAdapter<IRBlaster, IRBlasterHolder>(options) {
+            @NonNull
+            @Override
+            public IRBlasterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new IRBlasterHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.irblaster, parent, false));
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull IRBlasterHolder holder, int position, @NonNull IRBlaster model) {
+                holder.bind(model);
+                holder.itemView.setOnClickListener(v -> {
+                    Toast.makeText(IRBlasterActivity.this, model.toString(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        };
     }
 }
