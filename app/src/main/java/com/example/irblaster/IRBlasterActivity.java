@@ -1,16 +1,5 @@
 package com.example.irblaster;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.irblaster.databinding.ActivityIrblasterBinding;
 import com.firebase.ui.auth.AuthUI;
@@ -77,8 +75,7 @@ public class IRBlasterActivity extends AppCompatActivity {
             Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
         }
 
-        mBinding.irBlasterList.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.irBlasterList.addItemDecoration(new DividerItemDecoration(this, OrientationHelper.VERTICAL));
+        mBinding.irBlasterList.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @Override
