@@ -71,7 +71,7 @@ public abstract class EspTouchActivityAbs extends AppCompatActivity {
         };
         new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_item_about)
-                .setIcon(R.drawable.ic_info_baseline_black)
+                .setIcon(R.drawable.baseline_info_black_24)
                 .setItems(items, null)
                 .show();
     }
@@ -79,7 +79,7 @@ public abstract class EspTouchActivityAbs extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(Menu.NONE, MENU_ITEM_ABOUT, 0, R.string.menu_item_about)
-                .setIcon(R.drawable.ic_info_outline_white)
+                .setIcon(R.drawable.ic_info_outline_white_24dp)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return super.onCreateOptionsMenu(menu);
     }
