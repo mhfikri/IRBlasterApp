@@ -32,7 +32,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,10 +41,10 @@
             android:layout_marginTop="5dp">
 
             <ImageView
-                android:id="@+id/image_sensor_temp"
+                android:id="@+id/temperature_image"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_temperature_teal"
+                android:src="@drawable/ic_temperature_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +57,7 @@
                 android:gravity="center"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_sensor_temp"
+                app:layout_constraintStart_toEndOf="@+id/temperature_image"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,10 +69,10 @@
             android:layout_marginBottom="5dp">
 
             <ImageView
-                android:id="@+id/image_sensor_humidity"
+                android:id="@+id/humidity_image"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_humidity_teal"
+                android:src="@drawable/ic_humidity_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,9 +85,10 @@
                 android:gravity="center"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_sensor_humidity"
+                app:layout_constraintStart_toEndOf="@+id/humidity_image"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>
