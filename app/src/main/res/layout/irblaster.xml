@@ -41,23 +41,23 @@
             android:layout_marginTop="5dp">
 
             <ImageView
-                android:id="@+id/temperature_image"
+                android:id="@+id/temperature_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_temperature_24dp"
+                android:src="@drawable/ic_temperature_cool_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_sensor_temp"
+                android:id="@+id/text_sensor_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:gravity="center"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/temperature_image"
+                app:layout_constraintStart_toEndOf="@+id/temperature_icon"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,7 +69,7 @@
             android:layout_marginBottom="5dp">
 
             <ImageView
-                android:id="@+id/humidity_image"
+                android:id="@+id/humidity_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_humidity_24dp"
@@ -85,7 +85,7 @@
                 android:gravity="center"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/humidity_image"
+                app:layout_constraintStart_toEndOf="@+id/humidity_icon"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
