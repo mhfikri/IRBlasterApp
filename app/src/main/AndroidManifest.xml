@@ -21,6 +21,9 @@
         android:theme="@style/Theme.IRBlaster"
         tools:targetApi="31">
         <activity
+            android:name=".ApplianceActivity"
+            android:exported="false" />
+        <activity
             android:name=".IRBlasterActivity"
             android:exported="false" />
         <activity

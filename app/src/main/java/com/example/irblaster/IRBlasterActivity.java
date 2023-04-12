@@ -157,7 +157,8 @@ public class IRBlasterActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull IRBlasterHolder holder, int position, @NonNull IRBlaster model) {
                 holder.bind(model);
                 holder.itemView.setOnClickListener(v -> {
-                    Toast.makeText(IRBlasterActivity.this, model.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(IRBlasterActivity.this, model.toString(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(IRBlasterActivity.this, ApplianceActivity.class));
                 });
             }
         };
