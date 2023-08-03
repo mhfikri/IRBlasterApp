@@ -23,4 +23,9 @@ public abstract class AbstractIRBlaster {
     public abstract String getHumidity();
 
     public abstract void setHumidity(@Nullable String humidity);
+
+    @Nullable
+    public abstract String getAppVersion();
+
+    public abstract void setAppVersion(@Nullable String appVersion);
 }

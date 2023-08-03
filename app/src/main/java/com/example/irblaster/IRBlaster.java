@@ -5,19 +5,26 @@ import androidx.annotation.Nullable;
 
 public class IRBlaster extends AbstractIRBlaster {
     private String mId;
+    private String mUuid;
     private String mName;
     private String mTemperature;
     private String mHumidity;
+    private String mAppVersion;
 
     public IRBlaster() {
 
     }
 
-    public IRBlaster(@NonNull String id, @Nullable String name, @Nullable String temperature, @Nullable String humidity) {
+    public IRBlaster(@NonNull String id,
+                     @Nullable String name,
+                     @Nullable String temperature,
+                     @Nullable String humidity,
+                     @Nullable String appVersion) {
         mId = id;
         mName = name;
         mTemperature = temperature;
         mHumidity = humidity;
+        mAppVersion = appVersion;
     }
 
     @NonNull
@@ -62,6 +69,17 @@ public class IRBlaster extends AbstractIRBlaster {
     @Override
     public void setHumidity(@Nullable String humidity) {
         mHumidity = humidity;
+    }
+
+    @Nullable
+    @Override
+    public String getAppVersion() {
+        return mAppVersion;
+    }
+
+    @Override
+    public void setAppVersion(@Nullable String appVersion) {
+        mAppVersion = appVersion;
     }
 
     @NonNull
