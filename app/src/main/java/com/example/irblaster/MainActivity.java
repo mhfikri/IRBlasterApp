@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent getIRBlasterIntent(FirebaseUser user) {
         Intent intent = new Intent(MainActivity.this, IRBlasterActivity.class);
-        intent.putExtra("user_name", user.getDisplayName());
-        intent.putExtra("user_email", user.getEmail());
-        intent.putExtra("user_phone", user.getPhoneNumber());
+        intent.putExtra("uuid", user.getUid());
+        intent.putExtra("username", user.getDisplayName());
+        intent.putExtra("emailAddress", user.getEmail());
+        intent.putExtra("phoneNumber", user.getPhoneNumber());
 
         return intent;
     }

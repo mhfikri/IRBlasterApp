@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.irblaster.databinding.ActivityApplianceBinding;
 
@@ -64,20 +64,24 @@ public class ApplianceActivity extends AppCompatActivity {
             image = itemView.findViewById(R.id.appliance_image);
 
             itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(ApplianceActivity.this, ModelActivity.class);
+                String type = null;
                 switch (position) {
                     case 0:
-                        Toast.makeText(ApplianceActivity.this, "TV Activity", Toast.LENGTH_SHORT).show();
+                        type = "tv";
                         break;
                     case 1:
-                        Toast.makeText(ApplianceActivity.this, "AC Activity", Toast.LENGTH_SHORT).show();
+                        type = "ac";
                         break;
                 }
+                intent.putExtra("deviceId", getIntent().getStringExtra("deviceId"));
+                intent.putExtra("applianceType", type);
+                startActivity(intent);
             });
         }
     }
 
     private class ApplianceAdapter extends RecyclerView.Adapter<ApplianceHolder> {
-
         @NonNull
         @Override
         public ApplianceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

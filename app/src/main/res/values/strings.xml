@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">IR Blaster</string>
 
-    <string name="main_message">Welcome to Universal Remote Control!</string>
+    <string name="main_message">Welcome to\nUniversal Remote Control!</string>
+    <string name="login_message">Please login to continue</string>
     <string name="main_login">Login</string>
 
     <string name="menu_item_about">About App</string>
@@ -31,4 +32,7 @@
 
     <string name="irblaster_add">Add</string>
     <string name="irblaster_menu_item_logout">Log out</string>
+
+    <string name="about_device_id">Device ID: %1$s</string>
+    <string name="about_firmware_version">Firmware Version: %1$s</string>
 </resources>

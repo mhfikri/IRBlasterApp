@@ -5,14 +5,14 @@ import androidx.annotation.Nullable;
 
 public abstract class AbstractIRBlaster {
     @NonNull
-    public abstract String getId();
+    public abstract String getDeviceId();
 
-    public abstract void setId(@NonNull String id);
+    public abstract void setDeviceId(@NonNull String deviceId);
 
     @Nullable
-    public abstract String getName();
+    public abstract String getDeviceName();
 
-    public abstract void setName(@Nullable String name);
+    public abstract void setDeviceName(@Nullable String deviceName);
 
     @Nullable
     public abstract String getTemperature();
@@ -25,7 +25,7 @@ public abstract class AbstractIRBlaster {
     public abstract void setHumidity(@Nullable String humidity);
 
     @Nullable
-    public abstract String getAppVersion();
+    public abstract String getFirmwareVersion();
 
-    public abstract void setAppVersion(@Nullable String appVersion);
+    public abstract void setFirmwareVersion(@Nullable String firmwareVersion);
 }

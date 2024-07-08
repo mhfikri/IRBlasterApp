@@ -4,91 +4,92 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class IRBlaster extends AbstractIRBlaster {
-    private String mId;
-    private String mUuid;
-    private String mName;
-    private String mTemperature;
-    private String mHumidity;
-    private String mAppVersion;
+    private String deviceId;
+    private String uuid;
+    private String deviceName;
+    private String temperature;
+    private String humidity;
+    private String firmwareVersion;
 
     public IRBlaster() {
 
     }
 
-    public IRBlaster(@NonNull String id,
-                     @Nullable String name,
+    public IRBlaster(@NonNull String deviceId,
+                     @Nullable String deviceName,
                      @Nullable String temperature,
                      @Nullable String humidity,
-                     @Nullable String appVersion) {
-        mId = id;
-        mName = name;
-        mTemperature = temperature;
-        mHumidity = humidity;
-        mAppVersion = appVersion;
+                     @Nullable String firmwareVersion) {
+        this.deviceId = deviceId;
+        this.deviceName = deviceName;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.firmwareVersion = firmwareVersion;
     }
 
     @NonNull
     @Override
-    public String getId() {
-        return mId;
+    public String getDeviceId() {
+        return deviceId;
     }
 
     @Override
-    public void setId(@NonNull String id) {
-        mId = id;
+    public void setDeviceId(@NonNull String deviceId) {
+        this.deviceId = deviceId;
     }
 
     @Nullable
     @Override
-    public String getName() {
-        return mName;
+    public String getDeviceName() {
+        return deviceName;
     }
 
     @Override
-    public void setName(@Nullable String name) {
-        mName = name;
+    public void setDeviceName(@Nullable String deviceName) {
+        this.deviceName = deviceName;
     }
 
     @Nullable
     @Override
     public String getTemperature() {
-        return mTemperature;
+        return temperature;
     }
 
     @Override
     public void setTemperature(@Nullable String temperature) {
-        mTemperature = temperature;
+        this.temperature = temperature;
     }
 
     @Nullable
     @Override
     public String getHumidity() {
-        return mHumidity;
+        return humidity;
     }
 
     @Override
     public void setHumidity(@Nullable String humidity) {
-        mHumidity = humidity;
+        this.humidity = humidity;
     }
 
     @Nullable
     @Override
-    public String getAppVersion() {
-        return mAppVersion;
+    public String getFirmwareVersion() {
+        return firmwareVersion;
     }
 
     @Override
-    public void setAppVersion(@Nullable String appVersion) {
-        mAppVersion = appVersion;
+    public void setFirmwareVersion(@Nullable String firmwareVersion) {
+        this.firmwareVersion = firmwareVersion;
     }
 
     @NonNull
     public String toString() {
         return "Device{" +
-                "mId='" + mId + '\'' +
-                ",mName='" + mName + '\'' +
-                ",mTemperature=" + mTemperature +
-                ",mHumidity=" + mHumidity +
+                "id='" + deviceId + '\'' +
+                ",name='" + deviceName + '\'' +
+                ",appVersion=" + firmwareVersion +
+                ",temperature=" + temperature +
+                ",humidity=" + humidity +
                 '}';
     }
 }
