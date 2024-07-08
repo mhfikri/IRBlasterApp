@@ -338,7 +338,7 @@ public class IRBlasterActivity extends AppCompatActivity {
                                     } else {
                                         AlertDialog.Builder dialog = new AlertDialog.Builder(IRBlasterActivity.this);
                                         dialog.setTitle("Firmware update");
-                                        dialog.setMessage("IR Blaster v" + latestVersion + " available");
+                                        dialog.setMessage("IR Blaster v" + latestVersion + " is now available.");
                                         dialog.setPositiveButton("Update", (dialogInterface, i) -> {
                                             JSONObject data = new JSONObject();
                                             JSONObject payload = new JSONObject();
