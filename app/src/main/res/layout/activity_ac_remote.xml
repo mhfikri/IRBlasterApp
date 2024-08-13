@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".AcRemoteActivity">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <RelativeLayout
         android:id="@+id/displayLayout"
         android:layout_width="match_parent"

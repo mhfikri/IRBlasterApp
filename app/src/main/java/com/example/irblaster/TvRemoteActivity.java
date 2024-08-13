@@ -22,25 +22,25 @@ import org.json.JSONObject;
 public class TvRemoteActivity extends AppCompatActivity {
 
     private FirebaseFunctions mFunctions;
-    private ActivityTvRemoteBinding mBinding;
+    private ActivityTvRemoteBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = ActivityTvRemoteBinding.inflate(getLayoutInflater());
-        setContentView(mBinding.getRoot());
+        binding = ActivityTvRemoteBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mBinding.onOffButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_ONOFF));
-        mBinding.chUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_CHANNEL_UP));
-        mBinding.chDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_CHANNEL_DOWN));
-        mBinding.volUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_VOLUME_UP));
-        mBinding.volDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_VOLUME_DOWN));
-        mBinding.menuButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_MENU));
-        mBinding.okButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_OK));
-        mBinding.navUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_UP));
-        mBinding.navDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_DOWN));
-        mBinding.navLeftButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_LEFT));
-        mBinding.navRightButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_RIGHT));
+        binding.onOffButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_ONOFF));
+        binding.chUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_CHANNEL_UP));
+        binding.chDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_CHANNEL_DOWN));
+        binding.volUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_VOLUME_UP));
+        binding.volDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_VOLUME_DOWN));
+        binding.menuButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_MENU));
+        binding.okButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_OK));
+        binding.navUpButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_UP));
+        binding.navDownButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_DOWN));
+        binding.navLeftButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_LEFT));
+        binding.navRightButton.setOnClickListener(view -> sendMessage(Constants.REMOTE_TV_NAVIGATION_RIGHT));
 
         mFunctions = FirebaseFunctions.getInstance("asia-southeast2");
 
@@ -61,6 +61,7 @@ public class TvRemoteActivity extends AppCompatActivity {
     }
 
     private Task<String> addMessage(JSONObject data) {
+        binding.progressIndicator.show();
         return mFunctions
                 .getHttpsCallable("sendMessage")
                 .call(data)
@@ -101,6 +102,7 @@ public class TvRemoteActivity extends AppCompatActivity {
                                 Object details = ffe.getDetails();
                             }
                         }
+                        binding.progressIndicator.hide();
                     }
                 });
     }

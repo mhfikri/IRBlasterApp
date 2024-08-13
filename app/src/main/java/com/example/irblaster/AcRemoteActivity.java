@@ -71,17 +71,17 @@ public class AcRemoteActivity extends AppCompatActivity {
 
         binding.onOffButton.setOnClickListener(view -> {
             if (!isAcOn) {
-                sendMessage(Constants.REMOTE_AC_ON);
+                sendRemoteCommand(Constants.REMOTE_AC_ON);
                 setAcOn();
             } else {
-                sendMessage(Constants.REMOTE_AC_OFF);
+                sendRemoteCommand(Constants.REMOTE_AC_OFF);
                 setAcOff();
             }
         });
 
         binding.tempUpButton.setOnClickListener(view -> {
             if (currentTemperature < AC_TEMP_MAX) {
-                sendMessage(Constants.REMOTE_AC_TEMP_UP);
+                sendRemoteCommand(Constants.REMOTE_AC_TEMP_UP);
                 currentTemperature++;
                 setAcOn();
             }
@@ -89,7 +89,7 @@ public class AcRemoteActivity extends AppCompatActivity {
 
         binding.tempDownButton.setOnClickListener(view -> {
             if (currentTemperature > AC_TEMP_MIN) {
-                sendMessage(Constants.REMOTE_AC_TEMP_DOWN);
+                sendRemoteCommand(Constants.REMOTE_AC_TEMP_DOWN);
                 currentTemperature--;
                 setAcOn();
             }
@@ -106,16 +106,16 @@ public class AcRemoteActivity extends AppCompatActivity {
             if (currentFan > Constants.REMOTE_AC_FAN_SPEED.length - 1) {
                 currentFan = AC_FAN_AUTO;
             }
-            sendMessage(Constants.REMOTE_AC_FAN_SPEED[currentFan]);
+            sendRemoteCommand(Constants.REMOTE_AC_FAN_SPEED[currentFan]);
             setAcOn();
         });
 
         binding.swingButton.setOnClickListener(view -> {
             if (currentSwing == AC_SWING_OFF) {
-                sendMessage(Constants.REMOTE_AC_SWING_ON);
+                sendRemoteCommand(Constants.REMOTE_AC_SWING_ON);
                 currentSwing = AC_SWING_ON;
             } else {
-                sendMessage(Constants.REMOTE_AC_SWING_OFF);
+                sendRemoteCommand(Constants.REMOTE_AC_SWING_OFF);
                 currentSwing = AC_SWING_OFF;
             }
             setAcOn();
@@ -135,6 +135,7 @@ public class AcRemoteActivity extends AppCompatActivity {
                 data.put("autoOn", isChecked);
                 data.put("autoOnTemp", Integer.parseInt(temp));
                 updateSettings(data);
+                sendSettings(Constants.COMMAND_TYPE_REMOTE_AUTO_ON, isChecked, temp);
             }
         });
 
@@ -152,6 +153,7 @@ public class AcRemoteActivity extends AppCompatActivity {
                 data.put("autoOff", isChecked);
                 data.put("autoOffTemp", Integer.parseInt(temp));
                 updateSettings(data);
+                sendSettings(Constants.COMMAND_TYPE_REMOTE_AUTO_OFF, isChecked, temp);
             }
         });
 
@@ -279,40 +281,40 @@ public class AcRemoteActivity extends AppCompatActivity {
                 });
     }
 
-    private void sendMessageAuto() {
+    private void sendSettings(int type, boolean isChecked, String temp) {
         JSONObject data = new JSONObject();
         JSONObject payload = new JSONObject();
         try {
             data.put("deviceId", deviceId);
-            data.put("commandType", Constants.COMMAND_TYPE_REMOTE);
+            data.put("commandType", type);
             data.put("commandPayload", payload);
-
-            payload.put("remoteType", Constants.REMOTE_TYPE_AC);
             payload.put("remoteId", Integer.parseInt(remoteId));
-            payload.put("autoOn", binding.autoOnSwitch.isChecked() ? 1 : 0);
-            payload.put("autoOff", binding.autoOffSwitch.isChecked() ? 1 : 0);
-            payload.put("autoOnTemp", Integer.parseInt(binding.autoOnTemp.getText().toString()));
-            payload.put("autoOffTemp", Integer.parseInt(binding.autoOffTemp.getText().toString()));
+            payload.put("enable", isChecked);
+            payload.put("temp", Integer.parseInt(temp));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        sendMessage(data);
     }
 
-    private void sendMessage(int code) {
+    private void sendRemoteCommand(int code) {
         JSONObject data = new JSONObject();
         JSONObject payload = new JSONObject();
         try {
             data.put("deviceId", deviceId);
             data.put("commandType", Constants.COMMAND_TYPE_REMOTE);
             data.put("commandPayload", payload);
-
             payload.put("remoteType", Constants.REMOTE_TYPE_AC);
             payload.put("remoteId", Integer.parseInt(remoteId));
             payload.put("remoteCode", code);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        sendMessage(data);
+    }
 
+    private void sendMessage(JSONObject data) {
+        binding.progressIndicator.show();
         addMessage(data)
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -327,6 +329,7 @@ public class AcRemoteActivity extends AppCompatActivity {
                                 Object details = ffe.getDetails();
                             }
                         }
+                        binding.progressIndicator.hide();
                     }
                 });
     }

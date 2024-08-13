@@ -220,7 +220,7 @@ public class IRBlasterActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(IRBlasterActivity.this, "Device updated", Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
@@ -340,20 +340,20 @@ public class IRBlasterActivity extends AppCompatActivity {
                                         dialog.setTitle("Firmware update");
                                         dialog.setMessage("IR Blaster v" + latestVersion + " is now available.");
                                         dialog.setPositiveButton("Update", (dialogInterface, i) -> {
-                                            JSONObject data = new JSONObject();
+                                            JSONObject msg = new JSONObject();
                                             JSONObject payload = new JSONObject();
                                             try {
-                                                data.put("deviceId", model.getDeviceId());
-                                                data.put("commandType", Constants.COMMAND_TYPE_OTA);
+                                                msg.put("deviceId", model.getDeviceId());
+                                                msg.put("commandType", Constants.COMMAND_TYPE_OTA);
                                                 payload.put("binaryUrl", binaryUrl);
-                                                data.put("commandPayload", payload);
+                                                msg.put("commandPayload", payload);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
-                                            addMessage(data).addOnCompleteListener(task -> {
-                                                Map<String, Object> data1 = new HashMap<>();
-                                                data1.put("online", false);
-                                                updateDevice(model.getDeviceId(), data1);
+                                            addMessage(msg).addOnCompleteListener(task -> {
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("online", false);
+                                                updateDevice(model.getDeviceId(), data);
                                                 Toast.makeText(IRBlasterActivity.this, "Updating", Toast.LENGTH_SHORT).show();
                                             });
                                         });

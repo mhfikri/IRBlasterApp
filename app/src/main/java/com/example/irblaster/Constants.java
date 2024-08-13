@@ -4,6 +4,8 @@ public class Constants {
     public static final int COMMAND_TYPE_RESET = 1;
     public static final int COMMAND_TYPE_OTA = 2;
     public static final int COMMAND_TYPE_REMOTE = 3;
+    public static final int COMMAND_TYPE_REMOTE_AUTO_ON = 4;
+    public static final int COMMAND_TYPE_REMOTE_AUTO_OFF = 5;
 
     public static final int REMOTE_TYPE_AC = 1;
     public static final int REMOTE_TYPE_TV = 2;
